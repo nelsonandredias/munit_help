@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:dbserver="http://www.mulesoft.org/schema/mule/dbserver" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<configuration-properties doc:name="Configuration properties" doc:id="d0f7e08f-7b9c-4695-9b37-3a40463e94ac" file="db.properties" />
+	<db:config name="Test_Database_MariaDB_Config" doc:name="Database Config" doc:id="364d98cb-e473-4177-9a5e-5048613831cd" >
+		<db:generic-connection url="jdbc:h2:tcp://localhost/mem:mulesoft_course" driverClassName="org.h2.Driver" />
+	</db:config>
+	<dbserver:config name="MUnit_DB_Server_Config" doc:name="MUnit DB Server Config" doc:id="0d72a1d4-6c77-4c26-888d-86d6ca026291" >
+		<dbserver:connection csv="employees.csv" database="mulesoft_course" />
+	</dbserver:config>
+</mule>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<configuration-properties doc:name="Configuration properties" doc:id="cef7c68c-ec47-47c9-bd6e-603653dc0d92" file="db.properties" />
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="c705dbc3-4799-48c3-9864-73a9cc2b7469" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<db:config name="Database_MariaDB_Config" doc:name="Database Config" doc:id="877b2a36-a195-4eaf-95d9-4d56f8c503b0" >
+		<db:my-sql-connection host="localhost" port="3306" user="root" password="admin" database="mulesoft_course" />
+	</db:config>
+	<flow name="munit-db-server-42Flow" doc:id="84a0d887-5a59-4d62-b490-88e0f0c5c573" >
+		<http:listener doc:name="HTTP GET" doc:id="2925a902-9f61-4297-9b76-5d26c0d2a090" config-ref="HTTP_Listener_config" path="/employees" allowedMethods="GET"/>
+		<db:select doc:name="Select" doc:id="89087647-5887-4e33-8aa8-68b050f4a30f" config-ref="${DB_CONFIG}">
+			<db:sql ><![CDATA[SELECT * FROM employees;]]></db:sql>
+		</db:select>
+		<set-payload value="#[%dw 2.0
+
+
+output application/json
+---
+payload]" doc:name="Set Payload" doc:id="33645bf4-83b7-44d6-a7b7-a714c3e80c5b" />
+		<logger level="INFO" doc:name="Logger" doc:id="0df24bbd-1595-4505-9c3c-62b11d57c51a" message="#[%dw 2.0
+
+
+output application/json
+---
+payload]"/>
+	</flow>
+</mule>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:dbserver="http://www.mulesoft.org/schema/mule/dbserver"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/dbserver http://www.mulesoft.org/schema/mule/dbserver/current/mule-dbserver.xsd">
+	<munit:config name="munit-db-server-42-test-suite.xml" />
+	<configuration-properties doc:name="Configuration properties" doc:id="9e0f1618-55e6-423c-bad5-09b892e73a31" file="db.properties" />
+	<db:config name="Test_Database_MariaDB_Config" doc:name="Database Config" doc:id="35a05b07-7bf5-4191-824b-f46b163d2e4b" >
+		<db:generic-connection url="jdbc:h2:tcp://localhost/mem:mulesoft_course" driverClassName="org.h2.Driver"/>
+	</db:config>
+	<dbserver:config name="MUnit_DB_Server_Config" doc:name="MUnit DB Server Config" doc:id="403f1bb9-8cb1-4a20-a28d-e001d8707747" >
+		<dbserver:connection csv="employees.csv" database="mulesoft_course" />
+	</dbserver:config>
+	<munit:test name="munit-db-server-42-test-suite-munit-db-server-42FlowTest" doc:id="48293ffc-9b46-4934-9ae9-279d996976ea" description="Test">
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to munit-db-server-42Flow" doc:id="5e5fa755-b3ee-40d0-b57f-ad939cf3a0b2" name="munit-db-server-42Flow"/>
+		</munit:execution>
+	</munit:test>
+
+
+</mule>

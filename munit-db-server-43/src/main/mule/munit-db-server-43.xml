@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<flow name="munit-db-server-43Flow" doc:id="7a0b585a-0013-4778-b63d-70f8f787be92" >
+		<http:listener doc:name="HTTP GET" doc:id="3e91bac6-bc9a-4539-af3e-d9114cc313de" config-ref="HTTP_Listener_config" path="/employees" allowedMethods="GET"/>
+		<db:select doc:name="Select" doc:id="c33cf7dc-dd33-4481-ac61-2afefd3fc953" config-ref="${DB_CONFIG}">
+			<db:sql ><![CDATA[SELECT * FROM employees;]]></db:sql>
+		</db:select>
+		<set-payload value="#[%dw 2.0
+
+
+output application/json
+---
+payload]" doc:name="Set Payload" doc:id="42e16943-6d94-49a9-af86-ed7e65fd9cc7" />
+		<logger level="INFO" doc:name="Logger" doc:id="1f5774e8-17e4-4f0d-b9ad-3772a526635e" message="#[%dw 2.0
+
+
+output application/json
+---
+payload]"/>
+	</flow>
+</mule>
